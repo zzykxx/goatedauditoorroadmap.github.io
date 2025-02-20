@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just read the code</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.9),
+                rgba(0, 0, 0, 0.9)
+            );
+        }
+
+        .font1 { 
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: #FF355E;
+        }
+        .font2 { 
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            color: #FF00FF;
+        }
+        .font3 { 
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            color: #00FF00;
+        }
+        .font4 { 
+            font-family: 'Brush Script MT', cursive;
+            color: #00FFFF;
+        }
+        .font5 { 
+            font-family: 'Courier New', Courier, monospace;
+            color: #FFF700;
+        }
+        .font6 { 
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            color: #FF6EFF;
+        }
+        .font7 { 
+            font-family: 'Copperplate', 'Copperplate Gothic Light', fantasy;
+            color: #FF9933;
+        }
+        .font8 { 
+            font-family: Garamond, serif;
+            color: #00FF33;
+        }
+        .font9 { 
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color: #66FF66;
+        }
+        .font10 { 
+            font-family: 'Arial Black', Gadget, sans-serif;
+            color: #FF3366;
+        }
+
+        .text-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .floating-text {
+            position: absolute;
+            white-space: nowrap;
+            animation: float 8s linear infinite;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .diagonal-text {
+            position: absolute;
+            transform-origin: left;
+            white-space: nowrap;
+            animation: diagonal-scroll 12s linear infinite;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        .center-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: bold;
+            text-transform: uppercase;
+            animation: glitch 0.3s infinite;
+            z-index: 100;
+            mix-blend-mode: exclusion;
+            letter-spacing: -2px;
+            opacity: 0.9;
+            text-shadow: 
+                2px 2px #ff0000,
+                -2px -2px #00ff00,
+                4px 4px #0000ff;
+        }
+
+        @keyframes glitch {
+            0% {
+                transform: translate(-50%, -50%) skew(0deg);
+                text-shadow: 2px 2px #ff0000, -2px -2px #00ff00, 4px 4px #0000ff;
+            }
+            25% {
+                transform: translate(-52%, -50%) skew(5deg);
+                text-shadow: -2px 2px #00ff00, 2px -2px #0000ff, -4px 4px #ff0000;
+            }
+            50% {
+                transform: translate(-50%, -52%) skew(-5deg);
+                text-shadow: 2px -2px #0000ff, -2px 2px #ff0000, 4px -4px #00ff00;
+            }
+            75% {
+                transform: translate(-48%, -50%) skew(5deg);
+                text-shadow: -2px -2px #ff0000, 2px 2px #0000ff, -4px -4px #00ff00;
+            }
+            100% {
+                transform: translate(-50%, -50%) skew(0deg);
+                text-shadow: 2px 2px #ff0000, -2px -2px #00ff00, 4px 4px #0000ff;
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes float {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(100vw); }
+        }
+
+        @keyframes diagonal-scroll {
+            from { transform: rotate(45deg) translateX(-100%); }
+            to { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .vertical-text {
+            position: absolute;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            animation: vertical-float 15s linear infinite;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        @keyframes vertical-float {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(100vh); }
+        }
+
+        .rotating-text {
+            position: absolute;
+            animation: rotate 10s linear infinite;
+            transform-origin: center;
+            text-shadow: 0 0 5px currentColor;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(255, 255, 255, 0.03),
+                rgba(255, 255, 255, 0.03) 2px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 100;
+            mix-blend-mode: overlay;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="noise"></div>
+        <div class="text-layer" id="floatingLayer"></div>
+        <div class="text-layer" id="diagonalLayer"></div>
+        <div class="text-layer" id="verticalLayer"></div>
+        <div class="text-layer" id="rotatingLayer"></div>
+        <div class="center-text font1">JUST READ THE CODE</div>
+    </div>
+
+    <script>
+        const text = "JUST READ THE CODE ";
+        const fonts = ['font1', 'font2', 'font3', 'font4', 'font5', 'font6', 'font7', 'font8', 'font9', 'font10'];
+        
+        // Create floating texts
+        const floatingLayer = document.getElementById('floatingLayer');
+        for (let i = 0; i < 40; i++) {
+            const el = document.createElement('div');
+            el.className = `floating-text ${fonts[i % fonts.length]}`;
+            el.textContent = text;
+            el.style.top = `${Math.random() * 100}vh`;
+            el.style.animationDelay = `-${Math.random() * 8}s`;
+            el.style.fontSize = `${Math.random() * 20 + 16}px`;
+            floatingLayer.appendChild(el);
+        }
+
+        // Create diagonal texts
+        const diagonalLayer = document.getElementById('diagonalLayer');
+        for (let i = 0; i < 30; i++) {
+            const el = document.createElement('div');
+            el.className = `diagonal-text ${fonts[i % fonts.length]}`;
+            el.textContent = text.repeat(3);
+            el.style.top = `${i * 5}vh`;
+            el.style.animationDelay = `-${Math.random() * 12}s`;
+            el.style.fontSize = `${Math.random() * 20 + 14}px`;
+            diagonalLayer.appendChild(el);
+        }
+
+        // Create vertical texts
+        const verticalLayer = document.getElementById('verticalLayer');
+        for (let i = 0; i < 20; i++) {
+            const el = document.createElement('div');
+            el.className = `vertical-text ${fonts[i % fonts.length]}`;
+            el.textContent = text;
+            el.style.left = `${i * 5}vw`;
+            el.style.animationDelay = `-${Math.random() * 15}s`;
+            el.style.fontSize = `${Math.random() * 16 + 12}px`;
+            verticalLayer.appendChild(el);
+        }
+
+        // Create rotating texts
+        const rotatingLayer = document.getElementById('rotatingLayer');
+        for (let i = 0; i < 15; i++) {
+            const el = document.createElement('div');
+            el.className = `rotating-text ${fonts[i % fonts.length]}`;
+            el.textContent = text;
+            el.style.left = `${Math.random() * 100}vw`;
+            el.style.top = `${Math.random() * 100}vh`;
+            el.style.animationDelay = `-${Math.random() * 10}s`;
+            el.style.fontSize = `${Math.random() * 24 + 16}px`;
+            rotatingLayer.appendChild(el);
+        }
+
+        // Cycle center text font
+        const centerText = document.querySelector('.center-text');
+        let fontIndex = 0;
+        setInterval(() => {
+            fontIndex = (fontIndex + 1) % fonts.length;
+            centerText.className = `center-text ${fonts[fontIndex]}`;
+        }, 1000);
+    </script>
+</body>
+</html>
